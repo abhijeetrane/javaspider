@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+   id="org.eclipse.contribution.junit"
+   name="%pluginName"
+   version="1.1.0"
+   class="org.eclipse.contribution.junit.internal.core.JUnitPlugin">
+
+   <runtime>
+      <library name="contribjunit.jar">
+ 			<export name="*"/>
+			<packages prefixes="org.eclipse.contribution.junit"/>      
+	  </library>
+   </runtime>
+   
+   <requires>
+      <import plugin="org.junit"/>
+      <import plugin="org.eclipse.jdt.core"/>
+      <import plugin="org.eclipse.jdt.launching"/>
+      <import plugin="org.eclipse.debug.core"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.jdt.ui"/>
+      <import plugin="org.eclipse.help"/>
+   </requires>
+
+
+   <extension-point id="listeners" name="%testListeners" schema="schema/listeners.exsd"/>
+
+   <extension point="org.eclipse.core.resources.markers"
+         id="failure"
+         name="%failureMarkerName">
+      <super
+            type="org.eclipse.jdt.core.problem">
+      </super>
+      <persistent
+            value="true">
+      </persistent>
+   </extension>
+   
+   <extension point="org.eclipse.ui.propertyPages">
+      <page
+            objectClass="org.eclipse.core.resources.IProject"
+            adaptable="true"
+            name="%propertyPageName"
+            class="org.eclipse.contribution.junit.internal.ui.AutoTestPropertyPage"
+            id="org.eclipse.contribution.junit.autotestproperty">
+         <filter
+               name="nature"
+               value="org.eclipse.jdt.core.javanature">
+         </filter>
+      </page>
+   </extension>
+   
+   <extension point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            objectClass="org.eclipse.jdt.core.IType"
+            id="org.eclipse.contribution.junit.runtest">
+         <action
+               label="%runTestLabel"
+               helpContextId="runTestActionContext"
+               class="org.eclipse.contribution.junit.internal.ui.RunTestAction"
+               enablesFor="1"
+               id="org.eclipse.contribution.junit.runtest.action">
+         </action>
+      </objectContribution>
+   </extension>
+   
+   <extension point="org.eclipse.ui.popupMenus">
+      <viewerContribution
+            targetID="org.eclipse.contribution.junit.resultView"
+            id="org.eclipse.contribution.junit.popupMenu">
+         <action
+               label="Contributed Item"
+               menubarPath="additions"
+               id="org.eclipse.contribution.junit.popupMenu.contributedAction">
+         </action>
+      </viewerContribution>
+   </extension>
+   
+   <extension point="org.eclipse.ui.views">
+      <view
+            name="%resultViewName"
+            category="org.eclipse.jdt.ui.java"
+            class="org.eclipse.contribution.junit.internal.ui.ResultView"
+            id="org.eclipse.contribution.junit.resultView">
+      </view>
+      <view
+            name="%reportViewName"
+            icon="icons/testok.gif"
+            category="org.eclipse.jdt.ui.java"
+            class="org.eclipse.contribution.junit.internal.ui.TestReportView"
+            id="org.eclipse.contribution.junit.testReportView">
+      </view>
+   </extension>
+   
+   <extension point="org.eclipse.ui.editors">
+	 <editor 
+	   	  id="org.eclipse.contribution.junit.TestExclusionEditor"
+	      icon="icons/testok.gif"
+	      name="%editorName"
+	      filenames="test.exclusion"
+	      class="org.eclipse.ui.editors.text.TextEditor"
+	      default="true"
+	      contributorClass="org.eclipse.contribution.junit.internal.ui.TestExclusionEditorActionContributor">     
+	    </editor>
+   </extension>
+   
+   <extension point="org.eclipse.core.resources.natures"
+         id="autoTestNature"
+         name="%natureName">
+      <runtime>
+         <run
+               class="org.eclipse.contribution.junit.internal.core.AutoTestNature">
+         </run>
+      </runtime>
+      <requires-nature
+            id="org.eclipse.jdt.core.javanature">
+      </requires-nature>
+      <builder
+            id="org.eclipse.contribution.junit.autoTestBuilder">
+      </builder>
+   </extension>
+   
+   <extension point="org.eclipse.core.resources.builders"
+         id="autoTestBuilder"
+         name="%builderName">
+      <builder>
+         <run
+               class="org.eclipse.contribution.junit.internal.core.AutoTestBuilder">
+         </run>
+      </builder>
+   </extension>
+   
+   <extension point="org.eclipse.ui.markerImageProviders">
+      <imageprovider
+            markertype="org.eclipse.contribution.junit.failure"
+            icon="icons/testerr.gif"
+            id="org.contribution.junit">
+      </imageprovider>
+   </extension>
+   
+   <extension point="org.eclipse.ui.markerResolution">
+      <markerResolutionGenerator
+            markerType="org.eclipse.contribution.junit.failure"
+            class="org.eclipse.contribution.junit.internal.ui.RerunMarkerResolutionGenerator">
+      </markerResolutionGenerator>
+   </extension>
+   
+   <extension point="org.eclipse.help.toc">
+      <toc
+            file="toc.xml"
+            primary="true">
+      </toc>
+   </extension>
+   
+   <extension point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml"
+            plugin="org.eclipse.contribution.junit">
+      </contexts>
+   </extension>
+   
+   <extension point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <view
+               relative="org.eclipse.ui.views.TaskList"
+               visible="false"
+               relationship="stack"
+               id="org.eclipse.contribution.junit.TestReportView">
+         </view>
+      </perspectiveExtension>
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <view
+               ratio="0.6"
+               relative="org.eclipse.ui.views.TaskList"
+               visible="false"
+               relationship="bottom"
+               id="org.eclipse.contribution.junit.resultView">
+         </view>
+      </perspectiveExtension>
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <viewShortcut
+               id="org.eclipse.contribution.junit.TestReportView">
+         </viewShortcut>
+         <viewShortcut
+               id="org.eclipse.contribution.junit.resultView">
+         </viewShortcut>
+      </perspectiveExtension>
+   </extension>
+
+</plugin>

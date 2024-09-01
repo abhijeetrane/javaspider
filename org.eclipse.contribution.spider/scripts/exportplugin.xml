@@ -1,0 +1,35 @@
+<!-- build script to create JUnit Plugin -->
+<project name="org.eclipse.contribution.spider" default="export" basedir="..">
+	<target name="init">
+		<tstamp/>
+		<property name="destdir" value="../../plugin-export" />
+		<property name="plugin"  value="org.eclipse.contribution.spider" />
+		<property name="version"  value="" />
+		<property name="dest"  value="${destdir}/${plugin}${version}" />
+	</target>
+
+	<target name="build" depends="init">
+    	<eclipse.incrementalBuild project="${plugin}" kind="incr"/>
+	</target>
+
+	<target name="export" depends="build">
+		<mkdir dir="${destdir}" />
+		<delete dir="${dest}" />
+		<mkdir dir="${dest}" />
+		
+		<jar 
+			jarfile="${dest}/objectexplorer.jar"
+			basedir="bin"
+		/>
+				
+		<jar 		
+			jarfile="${dest}/objectexlporersrc.jar"
+			basedir="src"
+		/>
+		
+		<copy file="plugin.xml" todir="${dest}"/>
+		<copy todir="${dest}/icons">
+			<fileset dir="icons" />
+		</copy>		
+	</target>
+</project>

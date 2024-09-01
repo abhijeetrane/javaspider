@@ -1,0 +1,24 @@
+<project name="org.eclipse.contribution.spider" default="export" basedir=".">
+	<target name="init">
+		<tstamp/>
+		<property name="destdir" value="../../plugin-export" />
+		<property name="plugin"  value="org.eclipse.contribution.spider" />
+		<property name="dest"  value="${destdir}/${plugin}"/>
+	</target>
+
+	<target name="build" depends="init">
+    	<eclipse.incrementalBuild project="${plugin}" kind="incr"/>
+	</target>
+
+	<target name="export" depends="build">
+		<mkdir dir="${destdir}" />
+		<delete dir="${dest}" />
+		<mkdir dir="${dest}" />
+		
+		<jar 
+			jarfile="${dest}/spider.jar"
+			basedir="bin"
+		/>		
+		<copy file="plugin.xml" todir="${dest}"/>
+	</target>
+</project>

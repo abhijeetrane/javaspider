@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+   id="org.eclipse.contribution.junit.test"
+   name="Test Plug-in"
+   version="1.0.0">
+
+   <runtime>
+      <library name="test.jar"/>
+   </runtime>
+   <requires>
+      <import plugin="org.junit"/>
+      <import plugin="org.eclipse.contribution.junit"/>
+      <import plugin="org.eclipse.jdt.core"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.jdt.launching"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.jdt.ui"/>
+   </requires>
+
+
+   <extension
+         point="org.eclipse.contribution.junit.listeners">
+      <listener
+            class="org.eclipse.contribution.junit.test.ExtensionPointTest$Listener">
+      </listener>
+   </extension>
+
+</plugin>

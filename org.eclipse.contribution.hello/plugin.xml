@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+	id="org.eclipse.contribution.hello"
+	name="org.eclipse.contribution.hello"
+	version="1.0.0">
+
+	<requires>
+		<import plugin="org.eclipse.ui"/>
+	</requires>
+	
+	<runtime>
+		<library name="hello.jar"/>
+	</runtime>
+
+	<extension point="org.eclipse.ui.actionSets">
+		<actionSet
+			id="org.eclipse.contribution.hello.actionSet"
+			label="Hello Action Set">
+			<action
+				id="org.eclipse.contribution.hello.HelloAction"
+				label="Hello"
+				toolbarPath="helloGroup"
+				class="org.eclipse.contribution.hello.HelloAction">
+			</action>
+		</actionSet>
+	</extension>
+</plugin>

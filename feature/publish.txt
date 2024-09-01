@@ -1,0 +1,2 @@
+D:\eclipse>pscp updatesite.zip egamma@javaspider.sourceforge.net:/home/groups/j/ja/javaspider/htdocs
+egamma@javaspider.sourceforge.net's password:

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin
+   id="org.eclipse.contribution.spider"
+   name="Eclipse Spider Plug-in"
+   version="0.0.3"
+   provider-name=""
+   class="org.eclipse.contribution.spider.SpiderPlugin">
+
+   <runtime>
+      <library name="objectexplorer.jar"/>
+   </runtime>
+   <requires>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.jdt.debug.ui"/>
+      <import plugin="org.eclipse.jdt.core"/>
+      <import plugin="org.eclipse.jdt.ui"/>
+      <import plugin="org.eclipse.jdt.debug"/>
+      <import plugin="org.eclipse.debug.core"/>
+      <import plugin="org.eclipse.debug.ui"/>
+      <import plugin="org.junit"/>
+   </requires>
+
+
+   <extension-point id="handles" name="Handles"/>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            name="Spider"
+            class="org.eclipse.contribution.spider.SpiderView"
+            id="org.eclipse.contribution.spider.view">
+      </view>
+      <view
+            name="Spider Navigator"
+            icon="icons/sample.gif"
+            category="org.eclipse.pde.ui"
+            class="org.eclipse.contribution.spider.navigator.SpiderNavigatorView"
+            id="org.eclipse.contribution.spider.navigator.SpiderNavigatorView">
+      </view>
+      <view
+            name="Spider"
+            category="org.eclipse.debug.ui"
+            class="org.eclipse.contribution.spider.SpiderView"
+            id="org.eclipse.contribution.spider.debug.view">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            objectClass="org.eclipse.jdt.debug.core.IJavaVariable"
+            id="org.eclipse.contribution.spider.debug.popUpMenus">
+         <action
+               label="Explore"
+               class="org.eclipse.contribution.spider.debug.Explore"
+               menubarPath="openOnGroup"
+               enablesFor="+"
+               id="org.eclipse.contribution.spider.debug.popUpMenus.explore">
+         </action>
+         <action
+               label="Raw Explore"
+               class="org.eclipse.contribution.spider.debug.RawExplore"
+               menubarPath="openOnGroup"
+               enablesFor="+"
+               id="org.eclipse.contribution.spider.debug.popUpMenus.rawexplore">
+         </action>
+      </objectContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.debug.ui.DebugPerspective">
+         <view
+               relative="org.eclipse.debug.ui.VariableView"
+               visible="true"
+               relationship="stack"
+               id="org.eclipse.contribution.spider.debug.view">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.contribution.spider.handles">
+      <handle
+            icon="icons/delete.gif"
+            targetClass="org.eclipse.contribution.spider.ObjectFigure"
+            class="org.eclipse.contribution.spider.GotoSourceHandle"
+            id="org.eclipse.contribution.spider.gotoSourceHandle">
+      </handle>
+      <handle
+            icon="icons/fields.gif"
+            targetClass="org.eclipse.contribution.spider.ObjectFigure"
+            class="org.eclipse.contribution.spider.FieldsHandle"
+            id="org.eclipse.contribution.spider.fieldsHandle">
+      </handle>
+      <handle
+            icon="icons/attributes.gif"
+            targetClass="org.eclipse.contribution.spider.ObjectFigure"
+            class="org.eclipse.contribution.spider.AttributesHandle"
+            id="org.eclipse.contribution.spider.attributesHandle">
+      </handle>
+      <handle
+            icon="icons/delete.gif"
+            targetClass="org.eclipse.contribution.minidraw.IFigure"
+            class="org.eclipse.contribution.minidraw.DeleteHandle"
+            id="org.eclipse.contribution.spider.deleteHandle">
+      </handle>
+      <handle
+            icon="icons/delete.gif"
+            targetClass="org.eclipse.contribution.spider.BindingFigure"
+            class="org.eclipse.contribution.spider.ShowContractHandle"
+            id="org.eclipse.contribution.spider.contractHandle">
+      </handle>
+   </extension>
+   <extension
+         id="spiderPerspective"
+         name="Spider Perspective"
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="Spider"
+            class="org.eclipse.contribution.spider.SpiderFactory"
+            id="org.eclipse.contribution.spider.spiderPerspective">
+      </perspective>
+   </extension>
+
+</plugin>
